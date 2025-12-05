@@ -1,1 +1,15 @@
 {{ qs }}
+{% if qs %}
+    <br>
+{% endif %}
+
+<!--{{ paginator }}-->
+<!--{{ is_paginated }}-->
+{{ object_list }}<br>
+
+{% for obj in object_list %}
+
+{{ obj.title}} - {{ obj.description}} <br/>
+
+{% endfor%}
+
