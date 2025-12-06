@@ -1,7 +1,6 @@
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 
-
 # Importe o seu modelo (Product) e a função geradora
 from .models import Product
 from .utils import unique_slug_generator
