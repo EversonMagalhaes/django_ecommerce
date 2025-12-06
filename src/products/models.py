@@ -37,4 +37,4 @@ class Product(models.Model): #product_category
     objects = ProductManager()
 
     def __str__(self):
-        return f"ID: {self.id} | Produto: {self.title} | Preço: R${self.price}"
+        return self.title
