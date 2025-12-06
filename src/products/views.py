@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.views.generic import ListView, DetailView
 from django.shortcuts import render, get_object_or_404
 
@@ -37,7 +38,21 @@ class ProductDetailView(DetailView):
 
 #Function Based View
 def product_detail_view(request, pk = None, *args, **kwargs):
-    instance = get_object_or_404(Product, pk = pk)
+    #instance = get_object_or_404(Product, pk = pk)
+    # maneira 1 de testar
+    # try:
+    #     instance = Product.objects.get(id = pk)
+    # except Product.DoesNotExist:
+    #     print("Nenhum produto encontrado aqui!")
+    #     raise Http404("Esse produto não existe!")
+    
+    qs = Product.objects.filter(id = pk)
+    #if qs.exists(): ← maneira 2 de testar
+    if qs.count() == 1: #← maneira 3 de testar
+        instance = qs.first()
+    else:
+        raise Http404("Esse produto não existe!")
+    
     context = {
         'object': instance
     }
