@@ -1,6 +1,6 @@
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
-from django.utils.text import slugify
+
 
 # Importe o seu modelo (Product) e a função geradora
 from .models import Product
