@@ -38,7 +38,7 @@ class ProductDetailView(DetailView):
 
 #Function Based View
 def product_detail_view(request, pk = None, *args, **kwargs):
-    #instance = get_object_or_404(Product, pk = pk)
+    instance = get_object_or_404(Product, pk = pk) #← maneira mais simples de testar
     # maneira 1 de testar
     # try:
     #     instance = Product.objects.get(id = pk)
@@ -46,12 +46,12 @@ def product_detail_view(request, pk = None, *args, **kwargs):
     #     print("Nenhum produto encontrado aqui!")
     #     raise Http404("Esse produto não existe!")
     
-    qs = Product.objects.filter(id = pk)
+    #qs = Product.objects.filter(id = pk) # ← maneira 2 e 3 de testar
     #if qs.exists(): ← maneira 2 de testar
-    if qs.count() == 1: #← maneira 3 de testar
-        instance = qs.first()
-    else:
-        raise Http404("Esse produto não existe!")
+    # if qs.count() == 1: #← maneira 3 de testar
+    #     instance = qs.first()
+    # else:
+    #     raise Http404("Esse produto não existe!")
     
     context = {
         'object': instance
