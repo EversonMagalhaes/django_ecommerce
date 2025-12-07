@@ -8,8 +8,9 @@
 {{ object_list }}<br> -->
 
 {% for obj in object_list %}
+<a href='{{ obj.get_absolute_url }}'>{{ obj.title }}</a><br/>
 
-{{ obj.title}} - {{ obj.description}} <br/>
+<!-- {{ obj.title}} - {{ obj.description}} <br/> -->
 
 {% endfor%}
 
