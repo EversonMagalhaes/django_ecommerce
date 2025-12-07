@@ -1,4 +1,15 @@
+# Arquivos de Mídia e Conteúdo Gerado (CRUCIAL)
+# Ignora a pasta onde os uploads do usuário são salvos.
+/static_cdn/media_root/
+
+# Ignora a pasta onde o Django coleta os arquivos estáticos (coletados em produção)
+/static_cdn/static_root/
+
+#Ignora ambientes virtuais
 venv/
 
+# Ignora arquivos de cache do Python
 __pycache__/
+
+# Ignora arquivos de banco de dados SQLite
 *.sqlite3
