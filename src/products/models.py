@@ -38,10 +38,15 @@ class Product(models.Model): #product_category
     active      = models.BooleanField(default = True)
     
     objects = ProductManager()
+    
+    def get_absolute_url(self):
+        return "/products/{slug}/".format(slug = self.slug)
 
     def __str__(self):
         return f"{self.title}"
     #return f"Produto: {self.title} | ID: {self.id} | Preço: R${self.price}"
+
+
 
 #Method to generate slug before saving - visto no curso, mas substituído por signals.py e chamado em apps.py
 # def product_pre_save_receiver(sender, instance, *args, **kwargs):
