@@ -12,6 +12,9 @@
     <body>
         {% include 'base/navbar.html' with nome_da_marca='Loja virtual'%}
         {% block content %} {% endblock %}
+
+        {% include 'base/snippets/logout_modal.html' %}
+        
         {% include 'base/js.html' %}
     </body>
 </html>
