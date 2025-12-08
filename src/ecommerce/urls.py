@@ -35,7 +35,7 @@ urlpatterns = [
     path('contact', contact_page, name='contact'),
     path('login/', login_page),
     path('register/', register_page),
-    path('products/', include("products.urls")),
+    path('products/', include("products.urls", namespace='products')),
     # path('featured/', ProductFeaturedListView.as_view()),
     # path('featured/<int:pk>/', ProductFeaturedDetailView.as_view()),
     # path('products/', ProductListView.as_view()),
