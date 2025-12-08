@@ -2,7 +2,8 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from .forms import ContactForm, LoginForm, RegisterForm
-from django.contrib.auth import authenticate, login, get_user_model
+from django.contrib.auth import authenticate, login, get_user_model, logout
+from django.contrib import messages
 
 def home_page(request):
     context = {
@@ -70,6 +71,29 @@ def login_page(request):
             #Retorna uma mensagem de erro de 'invalid login'.
             print("Login inválido")
     return render(request, "auth/login.html", context)
+
+# def logout_page(request):
+#     context = {
+#         "content": "Você efetuou o logout com sucesso."
+#     }
+#     logout(request)
+#     return render(request, "auth/logout.html", context)
+
+def logout_process(request):
+    # Apenas processa o logout se for um envio POST
+    if request.method == "POST":
+        if request.user.is_authenticated:
+            # EXECUTA o logout
+            logout(request)
+            # Adiciona uma mensagem de sucesso para ser exibida após o redirecionamento
+            messages.success(request, "Você saiu da sua conta com sucesso.")
+        
+        # Redireciona o usuário para a página inicial
+        return redirect("/") 
+    
+    # Se alguém tentar acessar essa URL via GET (diretamente), redirecionamos
+    return redirect("/")
+
 
 User = get_user_model()
 def register_page(request):
