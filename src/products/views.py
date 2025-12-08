@@ -1,4 +1,5 @@
-from django.http import Http404
+#from django.http import Http404
+from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView
 #from django.shortcuts import render, get_object_or_404
 
@@ -25,21 +26,41 @@ class ProductListView(ListView):
     #     print(context)
     #     return context
 
+
 class ProductDetailSlugView(DetailView):
-    queryset = Product.objects.all()
-    template_name = "products/detail.html"
+    # O Manager customizado (Product.objects.all()) já filtra por active=True
+    queryset = Product.objects.all() 
+    template_name = "products/detail2.html"
 
     def get_object(self, *args, **kwargs):
         slug = self.kwargs.get('slug')
-        #instance = get_object_or_404(Product, slug = slug, active = True)
-        try:
-            instance = Product.objects.get(slug = slug, active = True)
-        except Product.DoesNotExist:
-            raise Http404("Não encontrado!")
-        except Product.MultipleObjectsReturned:
-            qs = Product.objects.filter(slug = slug, active = True)
-            instance =  qs.first()
+        
+        # 1. Busca o produto, mas apenas entre os ATIVOS
+        # Se o produto não for encontrado (ou for inativo), ele levanta 404
+        instance = get_object_or_404(Product.objects.all(), slug=slug)
+        
+        # O bloco try/except complexo é simplificado pelo get_object_or_404,
+        # pois o queryset já garante que ele só buscará ativos.
+        
         return instance
+
+
+
+# class ProductDetailSlugView(DetailView):
+#     queryset = Product.objects.all()
+#     template_name = "products/detail.html"
+
+#     def get_object(self, *args, **kwargs):
+#         slug = self.kwargs.get('slug')
+#         #instance = get_object_or_404(Product, slug = slug, active = True)
+#         try:
+#             instance = Product.objects.get(slug = slug)
+#         except Product.DoesNotExist:
+#             raise Http404("Não encontrado!")
+#         except Product.MultipleObjectsReturned:
+#             qs = Product.objects.filter(slug = slug, active = True)
+#             instance =  qs.first()
+#         return instance
 
 
 # #Function Based View

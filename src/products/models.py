@@ -16,6 +16,10 @@ class ProductManager(models.Manager):
         return ProductQuerySet(self.model, using = self._db)
     
     def all(self):
+        return self.get_queryset()
+    
+    def active(self):
+        # Mantenha o método active (se removido) para filtrar quando necessário.
         return self.get_queryset().active()
 
     def featured(self):
@@ -37,7 +41,8 @@ class Product(models.Model): #product_category
     image       = models.ImageField(upload_to='products/', null=True, blank=True)
     featured    = models.BooleanField(default = False)
     active      = models.BooleanField(default = True)
-    
+    timestamp   = models.DateTimeField(auto_now_add=True)
+
     objects = ProductManager()
 
     def get_absolute_url(self):
