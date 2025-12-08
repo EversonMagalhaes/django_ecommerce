@@ -11,6 +11,7 @@
 {% block content %}
 
     <div class='text-center'>
+        <!-- Exibe mensagens de sucesso, se houver -->
         {% if messages %}
             <ul class="messages list-unstyled">
                 {% for message in messages %}
@@ -20,7 +21,9 @@
                 {% endfor %}
             </ul>
         {% endif %}
+        <!-- # titulo da pagina -->
         <h1>{{ title }}</h1>
+        
         <h2>{{ content }}</h2>
         <h2>Tá funcionando perfeitamente!!!</h2>
 
