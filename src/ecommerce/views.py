@@ -72,12 +72,12 @@ def login_page(request):
             print("Login inválido")
     return render(request, "auth/login.html", context)
 
-def logout_page(request):
-    context = {
-        "content": "Você efetuou o logout com sucesso."
-    }
-    logout(request)
-    return render(request, "auth/logout.html", context)
+# def logout_page(request):
+#     context = {
+#         "content": "Você efetuou o logout com sucesso."
+#     }
+#     logout(request)
+#     return render(request, "auth/logout.html", context)
 
 def logout_process(request):
     # Apenas processa o logout se for um envio POST

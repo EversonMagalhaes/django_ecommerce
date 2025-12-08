@@ -1,11 +1,20 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-    {{ object.title }} <br/>
-    {{ object.description }} <br/>
-    {% if object.image %}
-        <img src='{{ object.image.url }}' class='img-fluid'/>
-    {% endif %}
-    {{ object.price }} <br/>
+<div class='container'>
+    <div class='row'>
+        <div class='col'>
+            <h1>{{ object.title }}</h1>
+            <h3>{{ "Um título qualquer"|title }}</h3> <!-- Usando o filtro title do Django -->
+            {{ object.description|linebreaks }} <br/>
+            
+            {% if object.image %}
+                <img src='{{ object.image.url }}' class='img-fluid'/>
+            {% endif %}
+            {% if object.active %}
+                <h3>Preço: R$ {{ object.price }}</h3>
+            {% endif %}
+        </div>
+    </div>
+</div>
 {% endblock content %}
