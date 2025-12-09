@@ -19,6 +19,7 @@ from django.urls import path, include
 from .views import home_page, about_page, contact_page, login_page, register_page, logout_process
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.generic import TemplateView
 
 
 # from products.views import (ProductListView,
@@ -37,6 +38,7 @@ urlpatterns = [
     # path('logout/', logout_page, name='logout'),
     path('logout/process/', logout_process, name='logout_process'),
     path('register/', register_page, name='register'),
+    path('bootstrap/', TemplateView.as_view(template_name='bootstrap/example.html')),
     path('products/', include("products.urls", namespace='products')),
     # path('featured/', ProductFeaturedListView.as_view()),
     # path('featured/<int:pk>/', ProductFeaturedDetailView.as_view()),
