@@ -1,0 +1,47 @@
+{% extends "base.html" %} 
+{% load widget_tweaks %}
+{% block content %}
+<div class="row">
+    <div class="col-md-6 col-md-offset-3 mx-auto"> <h1 class="mb-4">Registro de Novo Usuário</h1>
+        <form method='POST'> 
+            {% csrf_token %}
+
+            {% for field in form %}
+            <div class="form-group mb-3">
+                
+                {# Renderiza a label do campo #}
+                {{ field.label_tag }}
+
+                {# Renderiza o widget do campo com a classe Bootstrap #}
+                {{ field|add_class:'form-control' }} 
+
+                {# Exibe erros específicos do campo #}
+                {% if field.errors %}
+                    {% for error in field.errors %}
+                        <div class="alert alert-danger p-2 mt-1">
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                {# Ajuda o usuário a lembrar do que é o campo (texto de ajuda) #}
+                {% if field.help_text %}
+                    <small class="form-text text-muted">{{ field.help_text }}</small>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            {# Exibe erros que não estão ligados a um campo específico (ex: erros globais) #}
+            {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                    <div class="alert alert-danger p-2 mt-3">
+                        {{ error }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <button type='submit' class='btn btn-primary btn-lg mt-3'>Criar Conta</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

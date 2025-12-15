@@ -95,6 +95,21 @@ def logout_process(request):
     return redirect("/")
 
 
+# User = get_user_model()
+# def register_page(request):
+#     form = RegisterForm(request.POST or None)
+#     context = {
+#                     "form": form
+#               }
+#     if form.is_valid():
+#         print(form.cleaned_data)
+#         username = form.cleaned_data.get("username")
+#         email = form.cleaned_data.get("email")
+#         password = form.cleaned_data.get("password")
+#         new_user = User.objects.create_user(username, email, password)
+#         print(new_user)
+#     return render(request, "auth/register_v2.html", context)
+
 User = get_user_model()
 def register_page(request):
     form = RegisterForm(request.POST or None)
@@ -106,6 +121,23 @@ def register_page(request):
         username = form.cleaned_data.get("username")
         email = form.cleaned_data.get("email")
         password = form.cleaned_data.get("password")
+        
+        # 1. CRIAÇÃO DO NOVO USUÁRIO
         new_user = User.objects.create_user(username, email, password)
-        print(new_user)
-    return render(request, "auth/register.html", context)
+        print(f"Novo usuário criado: {new_user}")
+        
+        # 2. AUTENTICAÇÃO E LOGIN AUTOMÁTICO
+        # Autentica o usuário recém-criado para obter o objeto completo.
+        # Isso garante que todas as verificações de backend sejam feitas.
+        user_to_login = authenticate(request, username=username, password=password)
+        
+        if user_to_login is not None:
+            # Seta o usuário na sessão (Faz o login)
+            login(request, user_to_login)
+            print("Login automático realizado com sucesso!")
+            
+            # 3. REDIRECIONAMENTO
+            # Redireciona para a página inicial (ou 'home', se tiver esse nome de URL)
+            return redirect("/") # Você pode usar reverse('home') se estiver definido
+            
+    return render(request, "auth/register_v2.html", context)

@@ -1,0 +1,18 @@
+{% extends "base.html" %} 
+{% block content %}
+<div class="row">
+    <div class="col-md-6 col-md-offset-3 mx-auto">
+        <h1 class="mb-4">Registro de Novo Usuário</h1>
+        <form method='POST'> 
+            {% csrf_token %}
+            
+            {# Renderiza o formulário como parágrafos com classes Bootstrap #}
+            {{ form.as_p }} 
+
+            {# A melhoria de estilo exige Opção 1 ou um pacote específico (django-bootstrap4, etc.) #}
+            
+            <button type='submit' class='btn btn-primary btn-lg mt-3'>Criar Conta</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

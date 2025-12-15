@@ -1,8 +1,39 @@
 {% extends "base.html" %}
+{% load widget_tweaks %}
 {% block content %}
-    <form method='POST'> 
-        {% csrf_token %}
-        {{ form }}
-        <button type='submit' class='btn btn-default'>Enviar</button>
-    </form>
+<div class="row">
+    <div class="col-md-6 col-md-offset-3 mx-auto"> 
+        <h1 class="mb-4">Login</h1>
+        <form method='POST'> 
+            {% csrf_token %}
+
+            {% for field in form %}
+                <div class="form-group mb-3">
+                    {{ field.label_tag }}
+                    {{ field|add_class:'form-control' }} 
+                    {% if field.errors %}
+                        {% for error in field.errors %}
+                            <div class="alert alert-danger p-2 mt-1">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    {% if field.help_text %}
+                        <small class="form-text text-muted">{{ field.help_text }}</small>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                    <div class="alert alert-danger p-2 mt-3">
+                        {{ error }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        
+
+            <button type='submit' class='btn btn-primary btn-lg mt-3'>Enviar</button>
+        </form>
+    </div>
+</div>
 {% endblock %}
