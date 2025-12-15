@@ -2,6 +2,7 @@ from django.db import models
 #from .utils import unique_slug_generator
 from django.db.models.signals import pre_save
 from django.urls import reverse
+from unidecode import unidecode
 
 #Custom queryset
 class ProductQuerySet(models.query.QuerySet):
@@ -35,6 +36,7 @@ class ProductManager(models.Manager):
 # Create your models here.
 class Product(models.Model): #product_category
     title       = models.CharField(max_length=120)
+    search_title = models.CharField(max_length=120, blank=True, editable=False)
     slug        = models.SlugField(unique=True, null=True, blank=True)
     description = models.TextField()
     price       = models.DecimalField(decimal_places=2, max_digits=20, default=100.00)
@@ -48,6 +50,12 @@ class Product(models.Model): #product_category
     def get_absolute_url(self):
         #return "/products/{slug}/".format(slug = self.slug)
         return reverse("products:detail", kwargs={"slug": self.slug})
+    
+    def save(self, *args, **kwargs):
+        # 2. Sobrescreve o método save para limpar o título antes de salvar
+        if self.title:
+            self.search_title = unidecode(self.title).lower()
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.title}"
