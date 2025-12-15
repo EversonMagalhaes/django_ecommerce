@@ -29,20 +29,20 @@
 
     </div>
 
-    <div class='container'>
-        <div class='row'>
-            <div class='col'>
-                <img src="{% static 'img/loja_vitual.png' %}" class='img-fluid' />
-                <!--<p>{{ content }}</p>--> 
-            </div>
+
+    <div class='row'>
+        <div class='col'>
+            <img src="{% static 'img/loja_vitual.png' %}" class='img-fluid' />
+            <!--<p>{{ content }}</p>--> 
         </div>
-        {% if request.user.is_authenticated %}
-        <div class='row'>
-            <div class='col'>
-                <h1>Premium</h1>
-                <p>{{ premium_content }}</p>
-            </div>
+    </div>
+    {% if request.user.is_authenticated %}
+    <div class='row'>
+        <div class='col'>
+            <h1>Premium</h1>
+            <p>{{ premium_content }}</p>
         </div>
-        {% endif %}
-    </div>    <!-- Aqui vai tudo que é referente a home_page  -->
+    </div>
+    {% endif %}
+  
 {% endblock %}
