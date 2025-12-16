@@ -3,8 +3,7 @@
 # Create your views here.
 from django.views.generic import ListView
 from products.models import Product
-# from django.db.models import Q
-from unidecode import unidecode
+
 
 class SearchProductView(ListView):
     template_name = "search/view.html"
@@ -22,13 +21,21 @@ class SearchProductView(ListView):
         query = self.request.GET.get('q')
 
         if query:
-            # 1. Limpa o termo do usuário (query_limpo)
-            query_limpo = unidecode(query.strip()).lower() # Garante minúsculas
+            return Product.objects.search(query)
+        
+### movida para o manager e queryset do model Product - models.py
+            # # 1. Limpa o termo do usuário (query_limpo)
+            # query_limpo = unidecode(query.strip()).lower() # Garante minúsculas
             
-            # 2. Consulta o campo auxiliar (search_title)
-            return Product.objects.filter(
-                search_title__icontains=query_limpo
-            ).distinct()
+            # # 2. Consulta o campo auxiliar (search_title)
+            # #return Product.objects.filter(search_title__icontains=query_limpo).distinct()
+            # lookups = (
+            #     Q(search_title__icontains = query_limpo) 
+            #     | 
+            #     Q(description__contains = query_limpo)
+            # )
+            # return Product.objects.filter(lookups).distinct()
+
         
         return Product.objects.featured()
 
