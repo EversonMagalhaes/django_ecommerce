@@ -3,6 +3,7 @@ from django.db import models
 from django.db.models.signals import pre_save
 from django.urls import reverse
 from unidecode import unidecode
+from django.db.models import Q
 
 #Custom queryset
 class ProductQuerySet(models.query.QuerySet):
@@ -11,6 +12,18 @@ class ProductQuerySet(models.query.QuerySet):
 
     def featured(self):
         return self.filter(featured = True, active = True)
+    
+    def search(self, query):
+        #1. Limpa o termo do usuário (query_limpo)
+        query_limpo = unidecode(query.strip()).lower() # Garante minúsculas
+        #2. Consulta o campo auxiliar (search_title) ou (description)
+        lookups = (
+            Q(search_title__icontains = query_limpo) 
+            | 
+            Q(description__contains = query_limpo)
+        )
+        #3. distinct() para evitar resultados duplicados
+        return self.filter(lookups).distinct()
 
 class ProductManager(models.Manager):
     def get_queryset(self):
@@ -32,6 +45,9 @@ class ProductManager(models.Manager):
         if qs.count() == 1:
             return qs.first()
         return None
+
+    def search(self, query):
+        return self.get_queryset().active().search(query)   
 
 # Create your models here.
 class Product(models.Model): #product_category
@@ -59,7 +75,7 @@ class Product(models.Model): #product_category
 
     def __str__(self):
         return f"{self.title}"
-    #return f"Produto: {self.title} | ID: {self.id} | Preço: R${self.price}"
+        #return f"Produto: {self.title} | ID: {self.id} | Preço: R${self.price}"
 
 
 
