@@ -14,14 +14,19 @@ class ProductQuerySet(models.query.QuerySet):
         return self.filter(featured = True, active = True)
     
     def search(self, query):
+        lookups = Q()
         #1. Limpa o termo do usuário (query_limpo)
         query_limpo = unidecode(query.strip()).lower() # Garante minúsculas
         #2. Consulta o campo auxiliar (search_title) ou (description)
-        lookups = (
+        lookup_product = (
             Q(search_title__icontains = query_limpo) 
             | 
             Q(description__contains = query_limpo)
-        )
+        ) 
+        lookup_tags = Q(tag__title__icontains = query_limpo)
+
+        lookups = lookup_product | lookup_tags
+
         #3. distinct() para evitar resultados duplicados
         return self.filter(lookups).distinct()
 
