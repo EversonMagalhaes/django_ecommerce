@@ -25,7 +25,9 @@ class ProductQuerySet(models.query.QuerySet):
         ) 
         lookup_tags = Q(tag__title__icontains = query_limpo)
 
-        lookups = lookup_product | lookup_tags
+        lookup_description_fallback = Q(description__icontains = query)
+
+        lookups = lookup_product | lookup_tags | lookup_description_fallback
 
         #3. distinct() para evitar resultados duplicados
         return self.filter(lookups).distinct()
