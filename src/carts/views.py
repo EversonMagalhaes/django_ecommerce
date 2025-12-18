@@ -1,23 +1,28 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from products.models import Product
 from .models import Cart
 
 def cart_home(request):
-    cart_obj = Cart.objects.new_or_get(request)
+    cart_obj, new_obj = Cart.objects.new_or_get(request)
     return render(request, "carts/home.html", {})
 
+def cart_update(request):
+    product_id = 3
+    # Pega o produto com id 5
+    product_obj = Product.objects.get(id=product_id)
+    # Cria ou pega a instância já existente do carrinho
+    cart_obj, new_obj = Cart.objects.new_or_get(request)
+    # E o produto se adiciona a instância do campo M2M 
+    #cart_obj.products.add(product_obj) # cart_obj.products.add(product_id)
+    if product_obj in cart_obj.products.all():
+        cart_obj.products.remove(product_obj) # cart_obj.products.remove(product_id)
+    else:
+        # E o produto se adiciona a instância do campo M2M 
+        cart_obj.products.add(product_obj) # cart_obj.products.add(product_id)    
 
-# def cart_home(request):
-#     # Recebemos o objeto do carrinho E o booleano (se é novo ou não)
-#     cart_obj, new_obj = Cart.objects.new_or_get(request)
-#     products = cart_obj.products.all()
-#     total = 0
-#     for product in products:
-#         total += product.price
-#     print(total)
-#     cart_obj.total = total
-#     cart_obj.save()
-
-#     return render(request, "carts/home.html", {})
+    #cart_obj.products.remove(product_obj) # cart_obj.products.remove(product_id)
+    #return redirect(product_obj.get_absolute_url())
+    return redirect("cart:home")
 
 
 

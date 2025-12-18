@@ -2,6 +2,7 @@
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView
 #from django.shortcuts import render, get_object_or_404
+from carts.models import Cart
 
 from .models import Product
 
@@ -31,6 +32,12 @@ class ProductDetailSlugView(DetailView):
     # O Manager customizado (Product.objects.all()) já filtra por active=True
     queryset = Product.objects.all() 
     template_name = "products/detail2.html"
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(ProductDetailSlugView,  self).get_context_data(*args, **kwargs)
+        cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+        context['cart'] = cart_obj
+        return context
 
     def get_object(self, *args, **kwargs):
         slug = self.kwargs.get('slug')

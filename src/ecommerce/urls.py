@@ -35,14 +35,15 @@ urlpatterns = [
     path('', home_page, name='home'),
     path('about', about_page, name='about'),
     path('contact', contact_page, name='contact'),
-    path('cart/', cart_home, name='cart'),
+    #path('cart/', cart_home, name='cart'),
+    path('cart/', include("carts.urls", namespace="cart")), # Inclui as URLs do app carrinho
     path('login/', login_page, name='login'),
     # path('logout/', logout_page, name='logout'),
     path('logout/process/', logout_process, name='logout_process'),
     path('register/', register_page, name='register'),
     path('bootstrap/', TemplateView.as_view(template_name='bootstrap/example.html')),
-    path('products/', include("products.urls", namespace='products')),
-    path('search/', include("search.urls", namespace="search")),
+    path('products/', include("products.urls", namespace='products')), # Inclui as URLs do app produtos
+    path('search/', include("search.urls", namespace="search")), # Inclui as URLs do app search
     # path('featured/', ProductFeaturedListView.as_view()),
     # path('featured/<int:pk>/', ProductFeaturedDetailView.as_view()),
     # path('products/', ProductListView.as_view()),
