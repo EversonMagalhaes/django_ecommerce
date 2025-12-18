@@ -15,7 +15,7 @@ def cart_update(request):
         except Product.DoesNotExist:
             print("Mostrar mensagem ao usuário, esse produto acabou!")
             return redirect("cart:home")
-    
+        
     cart_obj, new_obj = Cart.objects.new_or_get(request)
     # E o produto se adiciona a instância do campo M2M 
     #cart_obj.products.add(product_obj) # cart_obj.products.add(product_id)
