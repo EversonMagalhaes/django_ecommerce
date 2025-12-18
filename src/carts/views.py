@@ -7,10 +7,15 @@ def cart_home(request):
     return render(request, "carts/home.html", {})
 
 def cart_update(request):
-    product_id = 3
-    # Pega o produto com id 5
-    product_obj = Product.objects.get(id=product_id)
-    # Cria ou pega a instância já existente do carrinho
+    print(request.POST)
+    product_id = request.POST.get('product_id')
+    if product_id is not None:
+        try:
+            product_obj = Product.objects.get(id = product_id)
+        except Product.DoesNotExist:
+            print("Mostrar mensagem ao usuário, esse produto acabou!")
+            return redirect("cart:home")
+    
     cart_obj, new_obj = Cart.objects.new_or_get(request)
     # E o produto se adiciona a instância do campo M2M 
     #cart_obj.products.add(product_obj) # cart_obj.products.add(product_id)

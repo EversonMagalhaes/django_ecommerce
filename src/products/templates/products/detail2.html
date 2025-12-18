@@ -32,31 +32,8 @@
 
         
         <div class='col-12 col-lg-4 mt-4 mt-lg-0'> 
+            {% include 'products/snippets/update-cart.html' with product=object cart=cart %}
             
-            {% if object.active %}
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">Disponibilidade</h5>
-                        <hr>
-                        <h2 class="text-success mb-3">R$ {{ object.price }}</h2>
-                        
-                        <button type="button" class="btn btn-primary btn-lg w-100">
-                            {{ cart }}
-                            {% if object in cart.products.all %}
-                                Produto no Carrinho
-                            {% else %}
-                                Adicione ao carrinho
-                            {% endif %}
-                            <!-- Adicionar ao Carrinho -->
-                        </button>
-                    </div>
-                </div>
-            {% else %}
-                <div class="alert alert-warning" role="alert">
-                    Produto indisponível no momento.
-                </div>
-            {% endif %}
-
         </div>
     </div>
 
