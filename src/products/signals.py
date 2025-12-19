@@ -3,7 +3,7 @@ from django.dispatch import receiver
 
 # Importe o seu modelo (Product) e a função geradora
 from .models import Product
-from .utils import unique_slug_generator
+from ecommerce.utils import unique_slug_generator
 
 # O decorator @receiver é a forma moderna e mais limpa de fazer o connect
 @receiver(pre_save, sender=Product)

@@ -5,7 +5,7 @@ from django.dispatch import receiver
 from .models import Tag 
 
 # Importe a função geradora do outro app (Products)
-from products.utils import unique_slug_generator
+from ecommerce.utils import unique_slug_generator
 
 @receiver(pre_save, sender=Tag)
 def tag_pre_save_receiver(sender, instance, *args, **kwargs):
