@@ -16,17 +16,19 @@ def cart_update(request):
             print("Mostrar mensagem ao usuário, esse produto acabou!")
             return redirect("cart:home")
         
-    cart_obj, new_obj = Cart.objects.new_or_get(request)
-    # E o produto se adiciona a instância do campo M2M 
-    #cart_obj.products.add(product_obj) # cart_obj.products.add(product_id)
-    if product_obj in cart_obj.products.all():
-        cart_obj.products.remove(product_obj) # cart_obj.products.remove(product_id)
-    else:
+        cart_obj, new_obj = Cart.objects.new_or_get(request)
         # E o produto se adiciona a instância do campo M2M 
-        cart_obj.products.add(product_obj) # cart_obj.products.add(product_id)    
+        #cart_obj.products.add(product_obj) # cart_obj.products.add(product_id)
+        if product_obj in cart_obj.products.all():
+            cart_obj.products.remove(product_obj) # cart_obj.products.remove(product_id)
+        else:
+            # E o produto se adiciona a instância do campo M2M 
+            cart_obj.products.add(product_obj) # cart_obj.products.add(product_id)    
 
-    #cart_obj.products.remove(product_obj) # cart_obj.products.remove(product_id)
-    #return redirect(product_obj.get_absolute_url())
+        #cart_obj.products.remove(product_obj) # cart_obj.products.remove(product_id)
+        #return redirect(product_obj.get_absolute_url())
+        request.session['cart_items'] = cart_obj.products.count()
+        
     return redirect("cart:home")
 
 
