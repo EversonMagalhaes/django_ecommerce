@@ -1,42 +1,15 @@
-<!-- <form method='POST' action='{% url "cart:update" %}' class="form"> {% csrf_token %}
+<form method='POST' action='{% url "cart:update" %}' class="form"> {% csrf_token %}
   <input type='hidden' name='product_id' value='{{ product.id }}' />
-  {% if product in cart.products.all %}
-    In cart <button type='submit' class='btn btn-link'>Remover?</button>
+  {% if in_cart %}
+    <button type='submit' class='btn btn-link btn-sm' style="padding:0px;cursor: pointer;">Excluir</button>
   {% else %}
-    <button type='submit' class='btn btn-success'>Adicionar</button>
+    {% if product in cart.products.all %}
+      No carrinho <button type='submit' class='btn btn-link'>Excluir</button>
+    {% else %}
+      <button type='submit' class='btn btn-success'>Adicionar</button>
+    {% endif %}
   {% endif %}
-</form> -->
+</form>
 
 
 
-{% if object.active %}
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <h5 class="card-title">Disponibilidade</h5>
-            <hr>
-            <h2 class="text-success mb-3">R$ {{ object.price }}</h2>
-            
-            <!-- <button type="button" class="btn btn-primary btn-lg w-100">
-                {{ cart }}
-                {% if object in cart.products.all %}
-                    Produto no Carrinho
-                {% else %}
-                    Adicione ao carrinho
-                {% endif %}
-                
-            </button> -->
-            <form method='POST' action='{% url "cart:update" %}' class="form"> {% csrf_token %}
-            <input type='hidden' name='product_id' value='{{ product.id }}' />
-            {% if product in cart.products.all %}
-                In cart <button type='submit' class="btn btn-primary btn-lg w-100">Remover?</button>
-            {% else %}
-                <button type='submit' class="btn btn-primary btn-lg w-100">Adicionar</button>
-            {% endif %}
-            </form>
-        </div>
-    </div>
-{% else %}
-    <div class="alert alert-warning" role="alert">
-        Produto indisponível no momento.
-    </div>
-{% endif %}
