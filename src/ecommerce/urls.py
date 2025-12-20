@@ -16,20 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .views import home_page, about_page, contact_page, login_page, register_page, logout_process
+from .views import home_page, about_page, contact_page
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
-from carts.views import cart_home
+from accounts.views import login_page, register_page
+from django.contrib.auth.views import LogoutView 
 
-
-# from products.views import (ProductListView,
-#                              product_list_view, 
-#                              ProductDetailView, 
-#                              product_detail_view, 
-#                              ProductDetailSlugView,
-#                              ProductFeaturedListView, 
-#                              ProductFeaturedDetailView)
 
 urlpatterns = [
     path('', home_page, name='home'),
@@ -38,8 +31,9 @@ urlpatterns = [
     #path('cart/', cart_home, name='cart'),
     path('cart/', include("carts.urls", namespace="cart")), # Inclui as URLs do app carrinho
     path('login/', login_page, name='login'),
-    # path('logout/', logout_page, name='logout'),
-    path('logout/process/', logout_process, name='logout_process'),
+    path('logout/', LogoutView.as_view(), name='logout'),
+    # estou usando o LogoutView do django
+        #path('logout/process/', logout_process, name='logout_process'),
     path('register/', register_page, name='register'),
     path('bootstrap/', TemplateView.as_view(template_name='bootstrap/example.html')),
     path('products/', include("products.urls", namespace='products')), # Inclui as URLs do app produtos
