@@ -41,12 +41,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'widget_tweaks',
     #our apps
+    'accounts',
+    'billing',
     'carts',
+    'orders',
     'products',
     'search',
     'tags',
-    'orders',
-    'accounts',
+    
+    
 
     
 ]
