@@ -20,7 +20,7 @@ from .views import home_page, about_page, contact_page
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
-from accounts.views import login_page, register_page
+from accounts.views import login_page, register_page, guest_register_view
 from django.contrib.auth.views import LogoutView 
 
 
@@ -31,6 +31,7 @@ urlpatterns = [
     #path('cart/', cart_home, name='cart'),
     path('cart/', include("carts.urls", namespace="cart")), # Inclui as URLs do app carrinho
     path('login/', login_page, name='login'),
+    path('register/guest/', guest_register_view, name='guest_register'),
     path('logout/', LogoutView.as_view(), name='logout'),
     # estou usando o LogoutView do django
         #path('logout/process/', logout_process, name='logout_process'),
