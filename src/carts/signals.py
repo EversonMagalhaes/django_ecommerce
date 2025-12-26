@@ -18,8 +18,8 @@ def m2m_changed_cart_receiver(sender, instance, action, *args, **kwargs):
 
 @receiver(pre_save, sender=Cart)
 def pre_save_cart_receiver(sender, instance, *args, **kwargs):
-    # Taxa de entrega fixa de 10
     if instance.subtotal > 0:
-        instance.total = Decimal(instance.subtotal) * Decimal(0.08) # 8% de taxa - ainda não sei porque disso , mas vamos seguir a aula
+        #instance.total = instance.subtotal  + 10 # considere o 10 como uma taxa de entrega
+        instance.total = Decimal(instance.subtotal) * Decimal(1.08) # 8% de taxa
     else:
         instance.total = 0.00

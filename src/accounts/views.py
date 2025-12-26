@@ -42,6 +42,10 @@ def login_page(request):
         print(user)
         print(request.user.is_authenticated)
         if user is not None:
+            try:
+                del request.session['guest_email_id']
+            except:
+                pass
             print(request.user.is_authenticated)
             login(request, user)
             if url_has_allowed_host_and_scheme( redirect_path, request.get_host() ):
