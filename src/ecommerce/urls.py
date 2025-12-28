@@ -22,6 +22,7 @@ from django.conf.urls.static import static
 from django.views.generic import TemplateView
 from accounts.views import login_page, register_page, guest_register_view
 from django.contrib.auth.views import LogoutView 
+from addresses.views import checkout_address_create_view
 
 
 urlpatterns = [
@@ -29,6 +30,7 @@ urlpatterns = [
     path('about', about_page, name='about'),
     path('contact', contact_page, name='contact'),
     #path('cart/', cart_home, name='cart'),
+    path('checkout/address/create/', checkout_address_create_view, name='checkout_address_create'),
     path('cart/', include("carts.urls", namespace="cart")), # Inclui as URLs do app carrinho
     path('login/', login_page, name='login'),
     path('register/guest/', guest_register_view, name='guest_register'),

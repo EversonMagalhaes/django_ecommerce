@@ -4,6 +4,7 @@ from .models import Cart
 from orders.models import Order
 from accounts.forms import LoginForm, GuestForm
 from billing.models import BillingProfile
+from addresses.forms import AddressForm
 #from accounts.models import GuestEmail
 
 def cart_home(request):
@@ -49,7 +50,8 @@ def checkout_home(request):
     billing_profile = None
     login_form = LoginForm()
     guest_form = GuestForm()
-    guest_email_id = request.session.get('guest_email_id')
+    address_form = AddressForm()
+ #   guest_email_id = request.session.get('guest_email_id')
 
 
     # if user.is_authenticated:
@@ -70,6 +72,7 @@ def checkout_home(request):
         "object": order_obj,
         "billing_profile": billing_profile,
         "login_form": login_form,
-        "guest_form": guest_form
+        "guest_form": guest_form,
+        "address_form": address_form
     }
     return render(request, "carts/checkout.html", context)
