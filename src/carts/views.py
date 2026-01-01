@@ -54,30 +54,25 @@ def checkout_home(request):
     address_form = AddressForm()
     billing_address_id = request.session.get("billing_address_id", None)
     shipping_address_id = request.session.get("shipping_address_id", None)
- #   guest_email_id = request.session.get('guest_email_id')
+    address_qs = None
 
-
-    # if user.is_authenticated:
-    #     billing_profile, billing_profile_created = BillingProfile.objects.get_or_create(
-    #         user=user, email=user.email)
-    # elif guest_email_id is not None:
-    #     guest_email_obj = GuestEmail.objects.get(id=guest_email_id)
-    #     billing_profile, billing_guest_profile_created = BillingProfile.objects.get_or_create(email=guest_email_obj.email)
-    # else:
-    #     pass
     billing_profile, billing_profile_created = BillingProfile.objects.new_or_get(request)
     
     if billing_profile is not None:
+
+        if request.user.is_authenticated:
+            address_qs = Address.objects.filter(billing_profile=billing_profile)
+
         order_obj, order_obj_created = Order.objects.new_or_get(billing_profile, cart_obj)
 
-    if shipping_address_id:
-            order_obj.shipping_address = Address.objects.get(id = shipping_address_id)
-            del request.session["shipping_address_id"]
-    if billing_address_id:
-            order_obj.billing_address = Address.objects.get(id = billing_address_id) 
-            del request.session["billing_address_id"]
-    if billing_address_id or shipping_address_id:
-            order_obj.save()
+        if shipping_address_id:
+                order_obj.shipping_address = Address.objects.get(id = shipping_address_id)
+                del request.session["shipping_address_id"]
+        if billing_address_id:
+                order_obj.billing_address = Address.objects.get(id = billing_address_id) 
+                del request.session["billing_address_id"]
+        if billing_address_id or shipping_address_id:
+                order_obj.save()
 
     if request.method == "POST":
         #verifica se o pedido foi feito
@@ -93,6 +88,7 @@ def checkout_home(request):
         "billing_profile": billing_profile,
         "login_form": login_form,
         "guest_form": guest_form,
-        "address_form": address_form
+        "address_form": address_form,
+        "address_qs": address_qs
     }
     return render(request, "carts/checkout.html", context)
