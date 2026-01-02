@@ -5,11 +5,13 @@ from django.db.models.functions import Lower
 class ProductAdmin(admin.ModelAdmin):
 
     # 1. Colunas que aparecem na tabela
-    list_display = ('title_display', 'slug', 'price', 'active')
+    list_display = ('titulo', 'slug', 'price', 'active')
 
-    @admin.display(ordering=Lower('title'), description='Title')
-    def title_display(self, obj):
+    @admin.display(ordering=Lower('title'), description='Titulo')
+    def titulo(self, obj):
         return obj.title
+
+    list_display_links = ('titulo','slug')
 
     # 2. Torna o preço e o status 'ativo' editáveis sem precisar clicar no produto
     list_editable = ('price', 'active')
