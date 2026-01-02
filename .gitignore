@@ -13,3 +13,5 @@ __pycache__/
 
 # Ignora arquivos de banco de dados SQLite
 *.sqlite3
+# Configurações de projeto da IDE (PyCharm / IntelliJ)
+.idea/
