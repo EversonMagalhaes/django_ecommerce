@@ -7,7 +7,7 @@ class ProductAdmin(admin.ModelAdmin):
     # 1. Colunas que aparecem na tabela
     list_display = ('titulo', 'slug', 'price', 'active')
 
-    @admin.display(ordering=Lower('title'), description='Titulo')
+    @admin.display(ordering=Lower('title'), description='Título')
     def titulo(self, obj):
         return obj.title
 
